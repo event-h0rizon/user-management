@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import validator from "validator";
 
 
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Slide, Zoom, Flip, Bounce } from 'react-toastify';
@@ -180,7 +181,7 @@ const Edit = ({ params: { id }, searchParams }) => {
             setAddress1(data.fetchedUser.address1)
             setAddress2(data.fetchedUser.address2)
             setZip(data.fetchedUser.zip)
-            setZipWarning(false)
+            // setZipWarning(false)
             setselectedISD(data.fetchedUser.country_isd)
 
         }
@@ -221,9 +222,10 @@ const Edit = ({ params: { id }, searchParams }) => {
 
         { validator.isMobilePhone(mobile.toString(), ['en-IN']) ? setMobileWarning(false) : setMobileWarning(true); }
 
+       
+        
 
-
-        (zip.length === 0 || zip.length != 6) ? setZipWarning(true) : setZipWarning(false);
+        (zip.toString().length != 6) ? setZipWarning(true) : setZipWarning(false);
 
         (address1.length === 0 || address1.length < 20) ? setAddress1Warning(true) : setAddress1Warning(false);
 

@@ -4,6 +4,7 @@ const User = require('@/models/User')
 
 connectToMongo()
 
+
 export const POST = async (req, res) => {
     const origin= req.headers.get('origin')
     const data = await req.json()

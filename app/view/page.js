@@ -41,7 +41,7 @@ const View = () => {
                     {users.length === 0 && <div className='text-4xl  text-center py-8'>No Users</div>}
                     {users.map((user, index) => {
                         return (
-                            <div className='flex gap-20 items-center px-4 py-4'>
+                            <div key={index} className='flex gap-20 items-center px-4 py-4'>
                                 <div>
                                     <div>S.No: {index + 1}</div>
                                 </div>
@@ -66,7 +66,7 @@ const View = () => {
                                         <div className='flex gap-2 flex-wrap font-semibold'>
                                             {user.countries.map((item, i) => {
                                                 return (
-                                                    <div>({i + 1}) {item}
+                                                    <div key={index}>({i + 1}) {item}
 
                                                     </div>
                                                 )
@@ -77,7 +77,7 @@ const View = () => {
                                         <div className='flex gap-2 flex-wrap font-semibold'>
                                             {user.states.map((item, i) => {
                                                 return (
-                                                    <div>({i + 1}) {item}
+                                                    <div key={index}>({i + 1}) {item}
 
                                                     </div>
                                                 )
