@@ -3,10 +3,13 @@ import React, { useState, useEffect } from 'react'
 export const dynamic = 'force-dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import Spinner from '@/components/Spinner'
 
 
 const View = () => {
     const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(true)
+
     const [deleteTrigger, setDeleteTrigger] = useState(false)
     const router = useRouter()
 
@@ -29,6 +32,7 @@ const View = () => {
             setUsers(data.users)
         }
         fetchUsers()
+        setLoading(false)
     }, [deleteTrigger])
 
 
@@ -37,8 +41,9 @@ const View = () => {
             <div className='px-4 py-2'>
                 <h1 className='text-3xl pb-6'>All users from the remote database.</h1>
                 <div>
+                {loading && <div className='py-8'><Spinner/></div>}
 
-                    {users.length === 0 && <div className='text-4xl  text-center py-8'>No Users</div>}
+                    {(!loading && users.length === 0) && <div className='text-4xl  text-center py-8'>No Users</div>}
                     {users.map((user, index) => {
                         return (
                             <div key={index} className='flex gap-20 items-center px-4 py-4'>
