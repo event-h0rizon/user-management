@@ -5,11 +5,6 @@
     "code": "AF"
     },
     {
-    "name": "Aland Islands",
-    "dial_code": "+358",
-    "code": "AX"
-    },
-    {
     "name": "Albania",
     "dial_code": "+355",
     "code": "AL"
@@ -18,11 +13,6 @@
     "name": "Algeria",
     "dial_code": "+213",
     "code": "DZ"
-    },
-    {
-    "name": "American Samoa",
-    "dial_code": "+1684",
-    "code": "AS"
     },
     {
     "name": "Andorra",
@@ -35,21 +25,6 @@
     "code": "AO"
     },
     {
-    "name": "Anguilla",
-    "dial_code": "+1264",
-    "code": "AI"
-    },
-    {
-    "name": "Antarctica",
-    "dial_code": "+672",
-    "code": "AQ"
-    },
-    {
-    "name": "Antigua and Barbuda",
-    "dial_code": "+1268",
-    "code": "AG"
-    },
-    {
     "name": "Argentina",
     "dial_code": "+54",
     "code": "AR"
@@ -58,11 +33,6 @@
     "name": "Armenia",
     "dial_code": "+374",
     "code": "AM"
-    },
-    {
-    "name": "Aruba",
-    "dial_code": "+297",
-    "code": "AW"
     },
     {
     "name": "Australia",
@@ -78,11 +48,6 @@
     "name": "Azerbaijan",
     "dial_code": "+994",
     "code": "AZ"
-    },
-    {
-    "name": "Bahamas",
-    "dial_code": "+1242",
-    "code": "BS"
     },
     {
     "name": "Bahrain",
@@ -130,11 +95,6 @@
     "code": "BT"
     },
     {
-    "name": "Bolivia, Plurinational State of",
-    "dial_code": "+591",
-    "code": "BO"
-    },
-    {
     "name": "Bosnia and Herzegovina",
     "dial_code": "+387",
     "code": "BA"
@@ -148,16 +108,6 @@
     "name": "Brazil",
     "dial_code": "+55",
     "code": "BR"
-    },
-    {
-    "name": "British Indian Ocean Territory",
-    "dial_code": "+246",
-    "code": "IO"
-    },
-    {
-    "name": "Brunei Darussalam",
-    "dial_code": "+673",
-    "code": "BN"
     },
     {
     "name": "Bulgaria",
@@ -195,11 +145,6 @@
     "code": "CV"
     },
     {
-    "name": "Cayman Islands",
-    "dial_code": "+ 345",
-    "code": "KY"
-    },
-    {
     "name": "Central African Republic",
     "dial_code": "+236",
     "code": "CF"
@@ -220,16 +165,6 @@
     "code": "CN"
     },
     {
-    "name": "Christmas Island",
-    "dial_code": "+61",
-    "code": "CX"
-    },
-    {
-    "name": "Cocos (Keeling) Islands",
-    "dial_code": "+61",
-    "code": "CC"
-    },
-    {
     "name": "Colombia",
     "dial_code": "+57",
     "code": "CO"
@@ -245,24 +180,9 @@
     "code": "CG"
     },
     {
-    "name": "Congo, The Democratic Republic of the Congo",
-    "dial_code": "+243",
-    "code": "CD"
-    },
-    {
-    "name": "Cook Islands",
-    "dial_code": "+682",
-    "code": "CK"
-    },
-    {
     "name": "Costa Rica",
     "dial_code": "+506",
     "code": "CR"
-    },
-    {
-    "name": "Cote d'Ivoire",
-    "dial_code": "+225",
-    "code": "CI"
     },
     {
     "name": "Croatia",
@@ -340,21 +260,6 @@
     "code": "ET"
     },
     {
-    "name": "Falkland Islands (Malvinas)",
-    "dial_code": "+500",
-    "code": "FK"
-    },
-    {
-    "name": "Faroe Islands",
-    "dial_code": "+298",
-    "code": "FO"
-    },
-    {
-    "name": "Fiji",
-    "dial_code": "+679",
-    "code": "FJ"
-    },
-    {
     "name": "Finland",
     "dial_code": "+358",
     "code": "FI"
@@ -365,24 +270,9 @@
     "code": "FR"
     },
     {
-    "name": "French Guiana",
-    "dial_code": "+594",
-    "code": "GF"
-    },
-    {
-    "name": "French Polynesia",
-    "dial_code": "+689",
-    "code": "PF"
-    },
-    {
     "name": "Gabon",
     "dial_code": "+241",
     "code": "GA"
-    },
-    {
-    "name": "Gambia",
-    "dial_code": "+220",
-    "code": "GM"
     },
     {
     "name": "Georgia",
@@ -400,44 +290,14 @@
     "code": "GH"
     },
     {
-    "name": "Gibraltar",
-    "dial_code": "+350",
-    "code": "GI"
-    },
-    {
     "name": "Greece",
     "dial_code": "+30",
     "code": "GR"
     },
     {
-    "name": "Greenland",
-    "dial_code": "+299",
-    "code": "GL"
-    },
-    {
-    "name": "Grenada",
-    "dial_code": "+1473",
-    "code": "GD"
-    },
-    {
-    "name": "Guadeloupe",
-    "dial_code": "+590",
-    "code": "GP"
-    },
-    {
-    "name": "Guam",
-    "dial_code": "+1671",
-    "code": "GU"
-    },
-    {
     "name": "Guatemala",
     "dial_code": "+502",
     "code": "GT"
-    },
-    {
-    "name": "Guernsey",
-    "dial_code": "+44",
-    "code": "GG"
     },
     {
     "name": "Guinea",

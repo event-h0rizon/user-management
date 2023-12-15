@@ -38,8 +38,10 @@ const View = () => {
     return (
         <>
             <div className='px-4 py-2'>
-                <h1 className='text-3xl pb-6'>All users</h1>
+                <h1 className='text-3xl pb-6'>All users from the remote database.</h1>
                 <div>
+
+                    {users.length===0 && <div className='text-4xl  text-center py-8'>No Users</div>}
                     {users.map((user, index) => {
                         return (
                             <div className='flex gap-20 items-center px-4 py-4'>
@@ -54,17 +56,17 @@ const View = () => {
                                 </button>
                                 <div className=''>
                                     <div className='flex gap-4 flex-wrap'>
-                                        <div>First Name: {user.firstName}</div>
-                                        <div>Last Name: {user.lastName}</div>
-                                        <div>Email: {user.email}</div>
-                                        <div>ISD Code: {user.country_isd}</div>
-                                        <div>Mobile: {user.mobile}</div>
-                                        <div>Zip: {user.zip}</div>
+                                        <div>First Name: <span className='font-semibold'>{user.firstName}</span></div>
+                                        <div>Last Name: <span className='font-semibold'>{user.lastName}</span></div>
+                                        <div>Email: <span className='font-semibold'>{user.email}</span></div>
+                                        <div>ISD Code: <span className='font-semibold'>{user.country_isd}</span></div>
+                                        <div>Mobile: <span className='font-semibold'>{user.mobile}</span></div>
+                                        <div>Zip: <span className='font-semibold'>{user.zip}</span></div>
                                     </div>
-                                    <div>Address 1: {user.address1}</div>
-                                    <div>Address 2: {user.address2}</div>
+                                    <div>Address 1: <span className='font-semibold'>{user.address1}</span></div>
+                                    <div>Address 2: <span className='font-semibold'>{user.address2}</span></div>
                                     <div className='flex gap-3'>Country:
-                                        <div className='flex gap-2 flex-wrap'>
+                                        <div className='flex gap-2 flex-wrap font-semibold'>
                                             {user.countries.map((item, i) => {
                                                 return (
                                                     <div>({i + 1}) {item}
@@ -75,7 +77,7 @@ const View = () => {
                                         </div>
                                     </div>
                                     <div className='flex gap-3'>State:
-                                        <div className='flex gap-2 flex-wrap'>
+                                        <div className='flex gap-2 flex-wrap font-semibold'>
                                             {user.states.map((item, i) => {
                                                 return (
                                                     <div>({i + 1}) {item}

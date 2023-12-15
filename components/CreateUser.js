@@ -6,32 +6,68 @@ import { TiDelete } from "react-icons/ti";
 import { useRouter } from 'next/navigation';
 import validator from "validator";
 
+import { useSelector, useDispatch } from 'react-redux';
+import { changeFirstName, changeLastName, changeEmail, changeMobile, changeAddress1, changeAddress2,changeZip, changeFirstNameWarning, changeLastNameWarning, changeMobileWarning, changeCountry, changeState, changeZipWarning, changeAddress1Warning, changeDisableButton, changeIsValid, changeSelectedISD } from '@/redux/features/user/userSlice';
+
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Slide, Zoom, Flip, Bounce } from 'react-toastify';
 
-const Edit = ({ params: { id }, searchParams }) => {
-    const router= useRouter()
-    const [firstName, setFirstName] = useState('')
-    const [firstNameWarning, setFirstNameWarning] = useState(false)
-    const [lastName, setLastName] = useState('')
-    const [lastNameWarning, setLastNameWarning] = useState(false)
-    const [email, setEmail] = useState('')
-    const [emailWarning, setEmailWarning] = useState(false)
-    const [address1, setAddress1] = useState('')
-    const [address2, setAddress2] = useState('')
-    const [mobile, setMobile] = useState('')
-    const [mobileWarning, setMobileWarning] = useState(false)
-    const [country, setCountry] = useState('')
-    const [state, setState] = useState('')
-    const [zip, setZip] = useState('')
-    const [zipWarning, setZipWarning] = useState(false)
-    const [address1Warning, setAddress1Warning] = useState(false)
-    const [disableButton, setDisabledButton] = useState(false)
-    const [isValid, setIsValid] = useState(false)
+const CreateUser = () => {
+    const router = useRouter()
+    const dispatch= useDispatch()
 
-    const [selectedISD, setselectedISD] = useState('+91')
+    const firstName= useSelector((state)=>state.user.firstName)
+    const lastName= useSelector((state)=>state.user.lastName)
+    const email= useSelector((state)=>state.user.email)
+    const mobile= useSelector((state)=>state.user.mobile)
+    const address1= useSelector((state)=>state.user.address1)
+    const address2= useSelector((state)=>state.user.address2)
+    const zip= useSelector((state)=>state.user.zip)
+
+    const firstNameWarning= useSelector((state)=>state.user.firstNameWarning)
+    const lastNameWarning= useSelector((state)=>state.user.lastNameWarning)
+    const mobileWarning= useSelector((state)=>state.user.mobileWarning)
+    const zipWarning= useSelector((state)=>state.user.zipWarning)
+    const address1Warning= useSelector((state)=>state.user.address1Warning)
+
+
+
+
+    const country= useSelector((state)=>state.user.country)
+    const state= useSelector((state)=>state.user.state)
+
+
+    const disableButton= useSelector((state)=>state.user.disableButton)
+    const isValid= useSelector((state)=>state.user.isValid)
+
+    const selectedISD= useSelector((state)=>state.user.selectedISD)
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // const [emailWarning, setEmailWarning] = useState(false)
+
+    // const [country, setCountry] = useState('')
+    // const [state, setState] = useState('')
+    // const [disableButton, setDisabledButton] = useState(false)
+    // const [isValid, setIsValid] = useState(false)
+
+    // const [selectedISD, setselectedISD] = useState('+91')
 
 
 
@@ -53,12 +89,14 @@ const Edit = ({ params: { id }, searchParams }) => {
 
     const addCountry = (country) => {
         if (selectedCountryList.includes(country)) {
-            setCountry([...selectedCountryList])
+            dispatch(changeCountry([...selectedCountryList]))
+            // setCountry([...selectedCountryList])
             setTypedCountry('')
             return
         } else {
+            dispatch(changeCountry([...selectedCountryList]))
             setSelectedCountryList([...selectedCountryList, country])
-            setCountry([...selectedCountryList])
+            // setCountry([...selectedCountryList])
             setTypedCountry('')
 
         }
@@ -70,14 +108,28 @@ const Edit = ({ params: { id }, searchParams }) => {
             return item !== country;
         });
         setSelectedCountryList(updatedCountries)
-        setCountry([...selectedCountryList])
+        dispatch(changeCountry([...selectedCountryList]))
 
     }
 
     const addState = (state) => {
-        setSelectedStateList([...selectedStateList, state])
-        console.log(('777777777777777777', state))
-        setState([...selectedStateList])
+
+        if (selectedStateList.includes(state)) {
+            dispatch(changeState([...selectedStateList]))
+            // setCountry([...selectedCountryList])
+            return
+        } else {
+            dispatch(changeState([...selectedStateList]))
+            setSelectedStateList([...selectedStateList, state])
+            // setCountry([...selectedCountryList])
+
+        }
+
+        // hello
+        // setSelectedStateList([...selectedStateList, state])
+        // console.log(('777777777777777777', state))
+        // dispatch(changeState([...selectedStateList]))
+        // setState([...selectedStateList])
 
     }
     const removeState = (state) => {
@@ -85,17 +137,19 @@ const Edit = ({ params: { id }, searchParams }) => {
             return item !== state;
         });
         setSelectedStateList(updatedStates)
-        setState([...selectedStateList])
+        dispatch(changeState([...selectedStateList]))
+        // setState([...selectedStateList])
     }
 
     const handleISDChange = (e) => {
         // Update the state with the selected option value
-        setselectedISD(e.target.value);
-      };
-    
+        dispatch(changeSelectedISD(e.target.value))
+        // setselectedISD(e.target.value);
+    };
 
-    const submitUserDetails = async (id) => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_UPDATE_USER}/${id}`, {
+
+    const submitUserDetails = async () => {
+        const response = await fetch(process.env.NEXT_PUBLIC_CREATE_USER, {
             method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
                 firstName,
                 lastName,
@@ -106,26 +160,26 @@ const Edit = ({ params: { id }, searchParams }) => {
                 address2,
                 countries: selectedCountryList,
                 states: selectedStateList,
-                zip,
+                zip
             })
         })
         const data = await response.json()
         console.log(data)
-      if (data?.success){
-        router.push('/view')
-        toast.success(`User updated successfully.`, {
-            transition: Flip,
-            position: "bottom-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
+        if (data?.success) {
+            router.push('/view')
+            toast.success(`User created successfully.`, {
+                transition: Flip,
+                position: "bottom-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
             });
 
-      }
+        }
 
     }
 
@@ -144,61 +198,42 @@ const Edit = ({ params: { id }, searchParams }) => {
             setTypedCountry(e.target.value)
         }
         if (e.target.name === 'firstName') {
-            setFirstName(e.target.value)
+            dispatch(changeFirstName(e.target.value))
+            // setFirstName(e.target.value)
         }
         if (e.target.name === 'lastName') {
-            setLastName(e.target.value)
+            dispatch(changeLastName(e.target.value))
+
         }
         if (e.target.name === 'email') {
-            setEmail(e.target.value)
+            dispatch(changeEmail(e.target.value))
             const validateEmail = () => {
-                const result= validator.isEmail(email)
 
-                // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                // const isValidEmail = emailRegex.test(email);
-                setIsValid(result);
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                const isValidEmail = emailRegex.test(email);
+                dispatch(changeIsValid(isValidEmail))
+                // setIsValid(isValidEmail);
             };
 
             validateEmail()
-            
 
         }
         if (e.target.name === 'zip') {
-            setZip(e.target.value)
+            dispatch(changeZip(e.target.value))
         }
         if (e.target.name === 'mobile') {
-            setMobile(e.target.value)
+            dispatch(changeMobile(e.target.value))
+
         }
         if (e.target.name === 'address1') {
-            setAddress1(e.target.value)
+            dispatch(changeAddress1(e.target.value))
+
         }
         if (e.target.name === 'address2') {
-            setAddress2(e.target.value)
+            dispatch(changeAddress2(e.target.value))
         }
 
     }
-
-    useEffect(() => {
-        const rawUserFetch= async()=> {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_EDIT_USER}/${id}`, { method: 'GET', headers: { "Content-Type": "application/json" } })
-            const data= await response.json()
-            console.log('NOWWWWWWWWWWWWWWWWW',data.fetchedUser.firstName)
-
-            setFirstName(data.fetchedUser.firstName)
-            setLastName(data.fetchedUser.lastName)
-            setEmail(data.fetchedUser.email)
-            setMobile(data.fetchedUser.mobile)
-            setAddress1(data.fetchedUser.address1)
-            setAddress2(data.fetchedUser.address2)
-            setZip(data.fetchedUser.zip)
-            setZipWarning(false)
-            setselectedISD(data.fetchedUser.country_isd)
-
-        }    
-        rawUserFetch()    
-
-    }, [])
-    
 
     useEffect(() => {
         if (typedCountry !== '') {
@@ -230,29 +265,30 @@ const Edit = ({ params: { id }, searchParams }) => {
 
     useEffect(() => {
 
-        (firstName.length === 0 || firstName.length < 5) ? setFirstNameWarning(true) : setFirstNameWarning(false);
+        (firstName.length === 0 || firstName.length < 5) ? dispatch(changeFirstNameWarning(true)) : dispatch(changeFirstNameWarning(false));
 
-        (lastName.length === 0 || lastName.length < 5) ? setLastNameWarning(true) : setLastNameWarning(false);
+        (lastName.length === 0 || lastName.length < 5) ? dispatch(changeLastNameWarning(true)): dispatch(changeLastNameWarning(false));
 
-        {validator.isMobilePhone(mobile.toString(),['en-IN'])  ? setMobileWarning(false) : setMobileWarning(true);}
+        (mobile.length === 0 || mobile.length != 10) ? dispatch(changeMobileWarning(true)) : dispatch(changeMobileWarning(false));
 
-       
+        (zip.length === 0 || zip.length != 6) ? dispatch(changeZipWarning(true)) : dispatch(changeZipWarning(false));
 
-        (zip.length === 0 || zip.length != 6) ? setZipWarning(true) : setZipWarning(false);
+        (address1.length === 0 || address1.length < 20) ? dispatch(changeAddress1Warning(true)) : dispatch(changeAddress1Warning(false));
 
-        (address1.length === 0 || address1.length < 20) ? setAddress1Warning(true) : setAddress1Warning(false);
-
-        {validator.isEmail(email)? setIsValid(true): setIsValid(false)}
+        { validator.isEmail(email) ? dispatch(changeIsValid(true)) : dispatch(changeIsValid(false)) }
 
 
-    }, [firstName, lastName, email, mobile, address1, zip, selectedISD])
+    }, [firstName, lastName, email, mobile, address1, zip])
 
     useEffect(() => {
-        if (firstName.length >= 5 && lastName.length >= 5 && mobile.length == 10 && zip.length == 6 && address1.length >= 20 && address1.length>=20 && selectedCountryList.length>0 && selectedStateList.length>0) {
-            setDisabledButton(false)
+        if (firstName.length >= 5 && lastName.length >= 5 && mobile.length == 10 && zip.length == 6 && address1.length >= 20 && address1.length >= 20 && selectedCountryList.length > 0 && selectedStateList.length > 0) {
+            dispatch(changeDisableButton(false))
+            // setDisabledButton(false)
         }
         else {
-            setDisabledButton(true)
+            dispatch(changeDisableButton(true))
+
+            // setDisabledButton(true)
         }
 
     }, [firstName, lastName, email, mobile, address1, zip, selectedCountryList, selectedStateList])
@@ -275,7 +311,7 @@ const Edit = ({ params: { id }, searchParams }) => {
         <div className='flex justify-center items-center  '>
             <div className='w-[40vw] mx-auto'>
                 <div className='my-2 text-center font-bold text-3xl'>
-                    Update User Details
+                    Create User
                 </div>
                 <div className='flex gap-x-2 my-2 w-[100%]'>
                     <input type="text" name='firstName' value={firstName} onChange={handleChange} className='border-2 border-black rounded-md px-2 py-1 w-[50%]' placeholder='First Name' />
@@ -297,7 +333,7 @@ const Edit = ({ params: { id }, searchParams }) => {
                     <label htmlFor="myList"></label>
                     <select id="myList" name="myList" value={selectedISD} onChange={handleISDChange} className='w-[40%]'>
                         {isd.map((item, index) => {
-                            return (<option key={index} selected={item.name==='India'} value={item.dial_code}>{item.name} ({item.dial_code})</option>)
+                            return (<option key={index} selected={item.name === 'India'} value={item.dial_code}>{item.name} ({item.dial_code})</option>)
                         })}
                     </select>
                     <input type="number" name='mobile' value={mobile} onChange={handleChange} className='border-2 border-black rounded-md ml-2 px-2 py-1 w-[100%]' placeholder='Mobile' />
@@ -317,8 +353,8 @@ const Edit = ({ params: { id }, searchParams }) => {
                 </div>
                 <div className='my-2'>
                     <input onClick={(e) => setDropDown(value => !value)} onChange={handleChange} name='typedCountry' value={typedCountry} type="text" className='border-2 border-black rounded-md px-2 py-1 w-[100%] cursor-pointer' placeholder='Choose Country' />
-                    {dropDown && <div className='relative h-[150px] overflow-auto'>
-                        <ul className=' px-2 py-2 my-2 cursor-pointer'>
+                    {dropDown && <div className='relative h-[150px] overflow-auto cursor-pointer'>
+                        <ul className=' px-2 py-2 my-2'>
                             {countryList.map((item, index) => {
                                 return (<li key={index}>
                                     <input onClick={() => addCountry(item.name)} type="checkbox" className='hidden' id={item.code} name={item.name} />
@@ -330,32 +366,32 @@ const Edit = ({ params: { id }, searchParams }) => {
                     <div className='bg-blue-500 px-1 rounded-md py-1 my-2 text-white' >
                         Selected Countries
                         {<div className='flex gap-2 flex-wrap py-3 px-2'>
-                        {selectedCountryList.map((country, index) => {
-                            return (
-                                <div key={index} value={country} onClick={() => removeCountry(country)} className='border-gray-400 border-2 rounded-md cursor-pointer px-1 py-1 flex items-center gap-x-2 bg-white text-black' >{country} <TiDelete className='text-2xl' /></div>
-                            )
-                        })}
+                            {selectedCountryList.map((country, index) => {
+                                return (
+                                    <div key={index} value={country} onClick={() => removeCountry(country)} className='border-gray-400 border-2 rounded-md cursor-pointer px-1 py-1 flex items-center gap-x-2 bg-white text-black' >{country} <TiDelete className='text-2xl' /></div>
+                                )
+                            })}
 
-                    </div>}
+                        </div>}
                     </div>
-                    
+
                 </div>
                 <div className='flex gap-x-2 my-2 items-center'>
                     <div className='w-[100%]'>
 
                         <div id="myStateList" onClick={(e) => setDropDownStates(value => !value)} name="myStateList" className='w-[100%]  overflow-auto border-black border-2 rounded-md px-2 py-1 cursor-pointer'>Choose State
 
+
                         </div>
                     </div>
 
                 </div>
-                {dropDownStates && <div className={`${stateList.length===0?'h-[150px]':''}overflow-auto text-red-500 cursor-pointer`}>
-                   {stateList && stateList.length===0 ? <div className='' key={Date.now()} >Choose a country first</div> : <div></div>}
+
+                {dropDownStates && <div className={`${stateList.length === 0 ? 'h-[150px]' : ''}overflow-auto cursor-pointer`}>
+                    {stateList && stateList.length === 0 ? <div className='text-red-500' key={Date.now()} >Choose a country first</div> : <div></div>}
                     {dropDownStates && stateList.map((item, index) => {
                         console.log(item)
-                       
                         return (<div key={index} onClick={() => addState(item.name)} value="item.dial_code">{item.name}</div>)
-                        
                     })}
 
                 </div>}
@@ -383,7 +419,7 @@ const Edit = ({ params: { id }, searchParams }) => {
                 </div>}
 
                 <div className='mt-10 mb-20 text-center'>
-                    <button onClick={()=>submitUserDetails(id)} disabled={disableButton} className='border-black border-2 disabled:bg-slate-500 rounded-md px-2 py-1 bg-blue-500 text-white hover:bg-blue-600'>Update</button>
+                    <button onClick={submitUserDetails} disabled={disableButton} className='border-black border-2 disabled:bg-slate-500 rounded-md px-2 py-1 bg-blue-500 text-white hover:bg-blue-600'>Create</button>
                 </div>
 
             </div>
@@ -391,4 +427,4 @@ const Edit = ({ params: { id }, searchParams }) => {
     )
 }
 
-export default Edit
+export default CreateUser
