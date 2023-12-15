@@ -6,72 +6,40 @@ import { TiDelete } from "react-icons/ti";
 import { useRouter } from 'next/navigation';
 import validator from "validator";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { changeFirstName, changeLastName, changeEmail, changeMobile, changeAddress1, changeAddress2,changeZip, changeFirstNameWarning, changeLastNameWarning, changeMobileWarning, changeCountry, changeState, changeZipWarning, changeAddress1Warning, changeDisableButton, changeIsValid, changeSelectedISD } from '@/redux/features/user/userSlice';
-
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Slide, Zoom, Flip, Bounce } from 'react-toastify';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { changeFirstName, changeLastName, changeEmail, changeMobile, changeAddress1, changeAddress2, changeZip, changeFirstNameWarning, changeLastNameWarning, changeMobileWarning, changeCountry, changeState, changeZipWarning, changeAddress1Warning, changeDisableButton, changeIsValid, changeSelectedISD } from '@/redux/features/user/userSlice';
+
+
+
+
 const CreateUser = () => {
     const router = useRouter()
-    const dispatch= useDispatch()
+    const dispatch = useDispatch()
 
-    const firstName= useSelector((state)=>state.user.firstName)
-    const lastName= useSelector((state)=>state.user.lastName)
-    const email= useSelector((state)=>state.user.email)
-    const mobile= useSelector((state)=>state.user.mobile)
-    const address1= useSelector((state)=>state.user.address1)
-    const address2= useSelector((state)=>state.user.address2)
-    const zip= useSelector((state)=>state.user.zip)
+    const firstName = useSelector((state) => state.user.firstName)
+    const lastName = useSelector((state) => state.user.lastName)
+    const email = useSelector((state) => state.user.email)
+    const mobile = useSelector((state) => state.user.mobile)
+    const address1 = useSelector((state) => state.user.address1)
+    const address2 = useSelector((state) => state.user.address2)
+    const zip = useSelector((state) => state.user.zip)
 
-    const firstNameWarning= useSelector((state)=>state.user.firstNameWarning)
-    const lastNameWarning= useSelector((state)=>state.user.lastNameWarning)
-    const mobileWarning= useSelector((state)=>state.user.mobileWarning)
-    const zipWarning= useSelector((state)=>state.user.zipWarning)
-    const address1Warning= useSelector((state)=>state.user.address1Warning)
+    const firstNameWarning = useSelector((state) => state.user.firstNameWarning)
+    const lastNameWarning = useSelector((state) => state.user.lastNameWarning)
+    const mobileWarning = useSelector((state) => state.user.mobileWarning)
+    const zipWarning = useSelector((state) => state.user.zipWarning)
+    const address1Warning = useSelector((state) => state.user.address1Warning)
 
+    const country = useSelector((state) => state.user.country)
+    const state = useSelector((state) => state.user.state)
 
-
-
-    const country= useSelector((state)=>state.user.country)
-    const state= useSelector((state)=>state.user.state)
-
-
-    const disableButton= useSelector((state)=>state.user.disableButton)
-    const isValid= useSelector((state)=>state.user.isValid)
-
-    const selectedISD= useSelector((state)=>state.user.selectedISD)
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // const [emailWarning, setEmailWarning] = useState(false)
-
-    // const [country, setCountry] = useState('')
-    // const [state, setState] = useState('')
-    // const [disableButton, setDisabledButton] = useState(false)
-    // const [isValid, setIsValid] = useState(false)
-
-    // const [selectedISD, setselectedISD] = useState('+91')
-
-
-
-
+    const disableButton = useSelector((state) => state.user.disableButton)
+    const isValid = useSelector((state) => state.user.isValid)
+    const selectedISD = useSelector((state) => state.user.selectedISD)
 
     const [dropDown, setDropDown] = useState(false)
     const [dropDownStates, setDropDownStates] = useState(false)
@@ -90,13 +58,11 @@ const CreateUser = () => {
     const addCountry = (country) => {
         if (selectedCountryList.includes(country)) {
             dispatch(changeCountry([...selectedCountryList]))
-            // setCountry([...selectedCountryList])
             setTypedCountry('')
             return
         } else {
             dispatch(changeCountry([...selectedCountryList]))
             setSelectedCountryList([...selectedCountryList, country])
-            // setCountry([...selectedCountryList])
             setTypedCountry('')
 
         }
@@ -116,20 +82,12 @@ const CreateUser = () => {
 
         if (selectedStateList.includes(state)) {
             dispatch(changeState([...selectedStateList]))
-            // setCountry([...selectedCountryList])
             return
         } else {
             dispatch(changeState([...selectedStateList]))
             setSelectedStateList([...selectedStateList, state])
-            // setCountry([...selectedCountryList])
 
         }
-
-        // hello
-        // setSelectedStateList([...selectedStateList, state])
-        // console.log(('777777777777777777', state))
-        // dispatch(changeState([...selectedStateList]))
-        // setState([...selectedStateList])
 
     }
     const removeState = (state) => {
@@ -138,13 +96,10 @@ const CreateUser = () => {
         });
         setSelectedStateList(updatedStates)
         dispatch(changeState([...selectedStateList]))
-        // setState([...selectedStateList])
     }
 
     const handleISDChange = (e) => {
-        // Update the state with the selected option value
         dispatch(changeSelectedISD(e.target.value))
-        // setselectedISD(e.target.value);
     };
 
 
@@ -164,7 +119,6 @@ const CreateUser = () => {
             })
         })
         const data = await response.json()
-        console.log(data)
         if (data?.success) {
             router.push('/view')
             toast.success(`User created successfully.`, {
@@ -199,20 +153,16 @@ const CreateUser = () => {
         }
         if (e.target.name === 'firstName') {
             dispatch(changeFirstName(e.target.value))
-            // setFirstName(e.target.value)
         }
         if (e.target.name === 'lastName') {
             dispatch(changeLastName(e.target.value))
-
         }
         if (e.target.name === 'email') {
             dispatch(changeEmail(e.target.value))
             const validateEmail = () => {
-
                 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 const isValidEmail = emailRegex.test(email);
                 dispatch(changeIsValid(isValidEmail))
-                // setIsValid(isValidEmail);
             };
 
             validateEmail()
@@ -242,8 +192,6 @@ const CreateUser = () => {
                     return inputString.replace(/\b\w/g, match => match.toUpperCase());
                 }
                 const moddedPrefix = capitalizeFirstLetterOfEachWord(prefix);
-                console.log('prefix', prefix)
-
                 return array.filter(item => item.name.startsWith(moddedPrefix));
             }
 
@@ -255,10 +203,6 @@ const CreateUser = () => {
         else {
             setCountryList([...isd])
             setTypedCountry('')
-
-
-
-
         }
 
     }, [typedCountry])
@@ -267,7 +211,7 @@ const CreateUser = () => {
 
         (firstName.length === 0 || firstName.length < 5) ? dispatch(changeFirstNameWarning(true)) : dispatch(changeFirstNameWarning(false));
 
-        (lastName.length === 0 || lastName.length < 5) ? dispatch(changeLastNameWarning(true)): dispatch(changeLastNameWarning(false));
+        (lastName.length === 0 || lastName.length < 5) ? dispatch(changeLastNameWarning(true)) : dispatch(changeLastNameWarning(false));
 
         (mobile.length === 0 || mobile.length != 10) ? dispatch(changeMobileWarning(true)) : dispatch(changeMobileWarning(false));
 
@@ -283,12 +227,9 @@ const CreateUser = () => {
     useEffect(() => {
         if (firstName.length >= 5 && lastName.length >= 5 && mobile.length == 10 && zip.length == 6 && address1.length >= 20 && address1.length >= 20 && selectedCountryList.length > 0 && selectedStateList.length > 0) {
             dispatch(changeDisableButton(false))
-            // setDisabledButton(false)
         }
         else {
             dispatch(changeDisableButton(true))
-
-            // setDisabledButton(true)
         }
 
     }, [firstName, lastName, email, mobile, address1, zip, selectedCountryList, selectedStateList])
@@ -301,7 +242,6 @@ const CreateUser = () => {
             return item.country_name === currentCountry;
         });
         setStateList([...filteredStates])
-
 
     }, [selectedCountryList])
 

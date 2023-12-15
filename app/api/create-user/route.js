@@ -4,14 +4,9 @@ const User = require('@/models/User')
 
 connectToMongo()
 
-
 export const POST = async (req, res) => {
     const origin= req.headers.get('origin')
-
     const data = await req.json()
-
-    console.log('Client sent',data)
-
     try {
 
         const user = await new User({
@@ -28,8 +23,6 @@ export const POST = async (req, res) => {
 
         })
         await user.save()
-        console.log('User created successfully. New user is:', user)
-
         return new NextResponse(JSON.stringify({ success: "success" }, { status: 201 }), {
             headers: {
                 'Access-Control-Allow-Origin': origin || "*",
@@ -38,6 +31,7 @@ export const POST = async (req, res) => {
         })
         
     } catch (error) {
+        console.log(error)
         return new NextResponse(JSON.stringify({ error }, { status: 404 }), {
             headers: {
                 'Access-Control-Allow-Origin': origin || "*",

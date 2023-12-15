@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Slide, Zoom, Flip, Bounce } from 'react-toastify';
 
 const Edit = ({ params: { id }, searchParams }) => {
-    const router= useRouter()
+    const router = useRouter()
     const [firstName, setFirstName] = useState('')
     const [firstNameWarning, setFirstNameWarning] = useState(false)
     const [lastName, setLastName] = useState('')
@@ -32,10 +32,6 @@ const Edit = ({ params: { id }, searchParams }) => {
     const [isValid, setIsValid] = useState(false)
 
     const [selectedISD, setselectedISD] = useState('+91')
-
-
-
-
 
     const [dropDown, setDropDown] = useState(false)
     const [dropDownStates, setDropDownStates] = useState(false)
@@ -76,7 +72,6 @@ const Edit = ({ params: { id }, searchParams }) => {
 
     const addState = (state) => {
         setSelectedStateList([...selectedStateList, state])
-        console.log(('777777777777777777', state))
         setState([...selectedStateList])
 
     }
@@ -89,10 +84,9 @@ const Edit = ({ params: { id }, searchParams }) => {
     }
 
     const handleISDChange = (e) => {
-        // Update the state with the selected option value
         setselectedISD(e.target.value);
-      };
-    
+    };
+
 
     const submitUserDetails = async (id) => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_UPDATE_USER}/${id}`, {
@@ -110,22 +104,21 @@ const Edit = ({ params: { id }, searchParams }) => {
             })
         })
         const data = await response.json()
-        console.log(data)
-      if (data?.success){
-        router.push('/view')
-        toast.success(`User updated successfully.`, {
-            transition: Flip,
-            position: "bottom-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
+        if (data?.success) {
+            router.push('/view')
+            toast.success(`User updated successfully.`, {
+                transition: Flip,
+                position: "bottom-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
             });
 
-      }
+        }
 
     }
 
@@ -152,15 +145,12 @@ const Edit = ({ params: { id }, searchParams }) => {
         if (e.target.name === 'email') {
             setEmail(e.target.value)
             const validateEmail = () => {
-                const result= validator.isEmail(email)
-
-                // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                // const isValidEmail = emailRegex.test(email);
+                const result = validator.isEmail(email)
                 setIsValid(result);
             };
 
             validateEmail()
-            
+
 
         }
         if (e.target.name === 'zip') {
@@ -179,10 +169,9 @@ const Edit = ({ params: { id }, searchParams }) => {
     }
 
     useEffect(() => {
-        const rawUserFetch= async()=> {
+        const rawUserFetch = async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_EDIT_USER}/${id}`, { method: 'GET', headers: { "Content-Type": "application/json" } })
-            const data= await response.json()
-            console.log('NOWWWWWWWWWWWWWWWWW',data.fetchedUser.firstName)
+            const data = await response.json()
 
             setFirstName(data.fetchedUser.firstName)
             setLastName(data.fetchedUser.lastName)
@@ -194,11 +183,11 @@ const Edit = ({ params: { id }, searchParams }) => {
             setZipWarning(false)
             setselectedISD(data.fetchedUser.country_isd)
 
-        }    
-        rawUserFetch()    
+        }
+        rawUserFetch()
 
     }, [])
-    
+
 
     useEffect(() => {
         if (typedCountry !== '') {
@@ -207,7 +196,6 @@ const Edit = ({ params: { id }, searchParams }) => {
                     return inputString.replace(/\b\w/g, match => match.toUpperCase());
                 }
                 const moddedPrefix = capitalizeFirstLetterOfEachWord(prefix);
-                console.log('prefix', prefix)
 
                 return array.filter(item => item.name.startsWith(moddedPrefix));
             }
@@ -221,9 +209,6 @@ const Edit = ({ params: { id }, searchParams }) => {
             setCountryList([...isd])
             setTypedCountry('')
 
-
-
-
         }
 
     }, [typedCountry])
@@ -234,21 +219,21 @@ const Edit = ({ params: { id }, searchParams }) => {
 
         (lastName.length === 0 || lastName.length < 5) ? setLastNameWarning(true) : setLastNameWarning(false);
 
-        {validator.isMobilePhone(mobile.toString(),['en-IN'])  ? setMobileWarning(false) : setMobileWarning(true);}
+        { validator.isMobilePhone(mobile.toString(), ['en-IN']) ? setMobileWarning(false) : setMobileWarning(true); }
 
-       
+
 
         (zip.length === 0 || zip.length != 6) ? setZipWarning(true) : setZipWarning(false);
 
         (address1.length === 0 || address1.length < 20) ? setAddress1Warning(true) : setAddress1Warning(false);
 
-        {validator.isEmail(email)? setIsValid(true): setIsValid(false)}
+        { validator.isEmail(email) ? setIsValid(true) : setIsValid(false) }
 
 
     }, [firstName, lastName, email, mobile, address1, zip, selectedISD])
 
     useEffect(() => {
-        if (firstName.length >= 5 && lastName.length >= 5 && mobile.length == 10 && zip.length == 6 && address1.length >= 20 && address1.length>=20 && selectedCountryList.length>0 && selectedStateList.length>0) {
+        if (firstName.length >= 5 && lastName.length >= 5 && mobile.length == 10 && zip.length == 6 && address1.length >= 20 && address1.length >= 20 && selectedCountryList.length > 0 && selectedStateList.length > 0) {
             setDisabledButton(false)
         }
         else {
@@ -297,7 +282,7 @@ const Edit = ({ params: { id }, searchParams }) => {
                     <label htmlFor="myList"></label>
                     <select id="myList" name="myList" value={selectedISD} onChange={handleISDChange} className='w-[40%]'>
                         {isd.map((item, index) => {
-                            return (<option key={index} selected={item.name==='India'} value={item.dial_code}>{item.name} ({item.dial_code})</option>)
+                            return (<option key={index} selected={item.name === 'India'} value={item.dial_code}>{item.name} ({item.dial_code})</option>)
                         })}
                     </select>
                     <input type="number" name='mobile' value={mobile} onChange={handleChange} className='border-2 border-black rounded-md ml-2 px-2 py-1 w-[100%]' placeholder='Mobile' />
@@ -330,15 +315,15 @@ const Edit = ({ params: { id }, searchParams }) => {
                     <div className='bg-blue-500 px-1 rounded-md py-1 my-2 text-white' >
                         Selected Countries
                         {<div className='flex gap-2 flex-wrap py-3 px-2'>
-                        {selectedCountryList.map((country, index) => {
-                            return (
-                                <div key={index} value={country} onClick={() => removeCountry(country)} className='border-gray-400 border-2 rounded-md cursor-pointer px-1 py-1 flex items-center gap-x-2 bg-white text-black' >{country} <TiDelete className='text-2xl' /></div>
-                            )
-                        })}
+                            {selectedCountryList.map((country, index) => {
+                                return (
+                                    <div key={index} value={country} onClick={() => removeCountry(country)} className='border-gray-400 border-2 rounded-md cursor-pointer px-1 py-1 flex items-center gap-x-2 bg-white text-black' >{country} <TiDelete className='text-2xl' /></div>
+                                )
+                            })}
 
-                    </div>}
+                        </div>}
                     </div>
-                    
+
                 </div>
                 <div className='flex gap-x-2 my-2 items-center'>
                     <div className='w-[100%]'>
@@ -349,13 +334,13 @@ const Edit = ({ params: { id }, searchParams }) => {
                     </div>
 
                 </div>
-                {dropDownStates && <div className={`${stateList.length===0?'h-[150px]':''}overflow-auto text-red-500 cursor-pointer`}>
-                   {stateList && stateList.length===0 ? <div className='' key={Date.now()} >Choose a country first</div> : <div></div>}
+                {dropDownStates && <div className={`${stateList.length === 0 ? 'h-[150px]' : ''}overflow-auto text-red-500 cursor-pointer`}>
+                    {stateList && stateList.length === 0 ? <div className='' key={Date.now()} >Choose a country first</div> : <div></div>}
                     {dropDownStates && stateList.map((item, index) => {
                         console.log(item)
-                       
+
                         return (<div key={index} onClick={() => addState(item.name)} value="item.dial_code">{item.name}</div>)
-                        
+
                     })}
 
                 </div>}
@@ -383,7 +368,7 @@ const Edit = ({ params: { id }, searchParams }) => {
                 </div>}
 
                 <div className='mt-10 mb-20 text-center'>
-                    <button onClick={()=>submitUserDetails(id)} disabled={disableButton} className='border-black border-2 disabled:bg-slate-500 rounded-md px-2 py-1 bg-blue-500 text-white hover:bg-blue-600'>Update</button>
+                    <button onClick={() => submitUserDetails(id)} disabled={disableButton} className='border-black border-2 disabled:bg-slate-500 rounded-md px-2 py-1 bg-blue-500 text-white hover:bg-blue-600'>Update</button>
                 </div>
 
             </div>

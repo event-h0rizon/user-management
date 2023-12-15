@@ -9,8 +9,6 @@ export const POST = async (req, res) => {
     const origin= req.headers.get('origin')
 
     const users = await User.find()
-    console.log('Users are:',users)
-    // return NextResponse.json({ rawFetch }, { status: 202 })
     return new NextResponse(JSON.stringify({ users }, { status: 202 }), {
         headers: {
             'Access-Control-Allow-Origin': origin || "*",
