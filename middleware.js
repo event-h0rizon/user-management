@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const allowedOrigins= process.env.NODE_ENV === 'production' ? ['https://www.user-management-eosin.vercel.app/','https://user-management-eosin.vercel.app/','http://localhost:3000'] : ['http://localhost:3000']
+const allowedOrigins= process.env.NODE_ENV === 'production' ? ['https://www.user-management-eosin.vercel.app','https://user-management-eosin.vercel.app','http://localhost:3000'] : ['http://localhost:3000']
 
 export const middleware= (req)=>{
    
