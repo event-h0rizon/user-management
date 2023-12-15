@@ -45,10 +45,10 @@ const View = () => {
                                 <div>
                                     <div>S.No: {index + 1}</div>
                                 </div>
-                                <button onClick={() => { handleEdit(user._id) }} className='rounded-md border-black border-2 bg-blue-500 text-white px-2 py-1'>Edit
+                                <button onClick={() => { handleEdit(user._id) }} className='rounded-md border-black border-2 bg-blue-500 text-white px-2 py-1 hover:bg-blue-700'>Edit
 
                                 </button>
-                                <button onClick={() => { handleDelete(user._id) }} className='rounded-md border-black border-2 bg-red-500 text-white px-2 py-1'>Delete
+                                <button onClick={() => { handleDelete(user._id) }} className='rounded-md border-black border-2 bg-red-500 text-white px-2 py-1 hover:bg-red-700'>Delete
 
                                 </button>
                                 <div className=''>
